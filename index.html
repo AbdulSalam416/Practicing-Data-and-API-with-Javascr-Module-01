@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
+  <body>
+    <!-- <img src="" alt="mana" id="mana" width="480" /> -->
+
+    <div height="400" width="800"><canvas id="myChart"></canvas></div>
+
+    <script async defer>
+      const xlabels = [];
+      const ylabels = [];
+
+      chartIt();
+
+      async function chartIt() {
+        const data = await getData();
+
+        const ctx = document.getElementById("myChart");
+
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: data.xs,
+            datasets: [
+              {
+                label: "Land-Ocean Temperature Index, L-OTI)",
+                fill: false,
+                data: data.ys,
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function (value, index, values) {
+                    return value + '"';
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      async function getData() {
+        xs = [];
+        ys = [];
+
+        const response = await fetch("ZonAnn.Ts+dSST.csv");
+        const data = await response.text();
+
+        table = data.split("\n").slice(2);
+
+        table.forEach((row) => {
+          const cols = row.split(",");
+          const year = cols[0];
+          xs.push(year);
+
+          const temp = cols[1];
+          ys.push(parseFloat(temp) + 1);
+        });
+
+        return { xs, ys };
+      }
+    </script>
+  </body>
+</html>
