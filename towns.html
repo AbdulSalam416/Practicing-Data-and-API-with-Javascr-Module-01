@@ -24,7 +24,7 @@
         xs = [];
         ys = [];
 
-        const response = await fetch("cities-towns.csv");
+        const response = await fetch("cities-population.csv");
         const data = await response.text();
 
         table = data.split("\n").slice(2);

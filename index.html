@@ -58,7 +58,7 @@
         xs = [];
         ys = [];
 
-        const response = await fetch("ZonAnn.Ts+dSST.csv");
+        const response = await fetch("temprature-data.csv");
         const data = await response.text();
 
         table = data.split("\n").slice(2);
