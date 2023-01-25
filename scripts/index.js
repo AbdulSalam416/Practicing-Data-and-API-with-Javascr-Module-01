@@ -43,7 +43,7 @@ async function getData() {
   xs = [];
   ys = [];
 
-  const response = await fetch("temprature-data.csv");
+  const response = await fetch("../temprature-data.csv");
   const data = await response.text();
 
   table = data.split("\n").slice(2);
@@ -74,7 +74,7 @@ async function getTownsData() {
   xs = [];
   ys = [];
 
-  const response = await fetch("cities-towns.csv");
+  const response = await fetch("../cities-towns.csv");
   const data = await response.text();
 
   table = data.split("\n").slice(2);
